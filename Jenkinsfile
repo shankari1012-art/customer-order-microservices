@@ -19,7 +19,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('order-service') {
+                dir('microservices-assignment2/order-service') {
                     bat 'mvn clean package -DskipTests'
                 }
             }
@@ -27,21 +27,15 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('order-service') {
+                dir('microservices-assignment2/order-service') {
                     bat 'mvn test'
                 }
             }
         }
 
-        stage('Code Quality (Optional)') {
-            steps {
-                echo 'Static code analysis can be added here (SonarQube)'
-            }
-        }
-
         stage('Docker Build') {
             steps {
-                dir('order-service') {
+                dir('microservices-assignment2/order-service') {
                     bat 'docker build -t %IMAGE_NAME% .'
                 }
             }
