@@ -5,21 +5,17 @@ pipeline {
         maven 'Maven'
     }
 
-    environment {
-        IMAGE_NAME = "order-service"
-    }
-
     stages {
 
         stage('Clone') {
             steps {
-                git branch: 'main', url: 'https://github.com/shankari1012-art/customer-order-microservices.git'
+                git 'https://github.com/shankari1012-art/customer-order-microservices.git'
             }
         }
 
         stage('Build') {
             steps {
-                dir('microservices-assignment2') {
+                dir('microservices-assignment2/order-service') {
                     bat 'mvn clean package -DskipTests'
                 }
             }
@@ -27,7 +23,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('microservices-assignment2') {
+                dir('microservices-assignment2/order-service') {
                     bat 'mvn test'
                 }
             }
@@ -36,7 +32,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 dir('microservices-assignment2/order-service') {
-                    bat 'docker build -t %IMAGE_NAME% .'
+                    bat 'docker build -t order-service .'
                 }
             }
         }
@@ -44,9 +40,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 bat '''
-                docker stop order-service-container || true
-                docker rm order-service-container || true
-                docker run -d -p 8087:8082 --name order-service-container %IMAGE_NAME%
+                docker stop order-service-container || exit 0
+                docker rm order-service-container || exit 0
+                docker run -d -p 8087:8082 --name order-service-container order-service
                 '''
             }
         }
