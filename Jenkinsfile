@@ -19,7 +19,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('microservices-assignment2/order-service') {
+                dir('microservices-assignment2') {
                     bat 'mvn clean package -DskipTests'
                 }
             }
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('microservices-assignment2/order-service') {
+                dir('microservices-assignment2') {
                     bat 'mvn test'
                 }
             }
