@@ -7,23 +7,29 @@ pipeline {
 
     stages {
 
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                dir('microservices-assignment2/order-service') {
-                    bat 'mvn clean package -DskipTests'
+                git branch: 'main', url: 'https://github.com/shankari1012-art/customer-order-microservices.git'
+            }
+        }
+
+        stage('Build All Services') {
+            steps {
+                dir('microservices-assignment2') {
+                    bat 'mvn clean install -DskipTests'
                 }
             }
         }
 
         stage('Test') {
             steps {
-                dir('microservices-assignment2/order-service') {
+                dir('microservices-assignment2') {
                     bat 'mvn test'
                 }
             }
         }
 
-        stage('Docker Build') {
+        stage('Docker Build - Order Service') {
             steps {
                 dir('microservices-assignment2/order-service') {
                     bat 'docker build -t order-service .'
@@ -31,7 +37,7 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy - Order Service') {
             steps {
                 bat '''
                 docker stop order-service-container || exit 0
@@ -44,10 +50,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline executed successfully!'
+            echo '✅ Pipeline executed successfully!'
         }
         failure {
-            echo 'Pipeline failed. Check logs.'
+            echo '❌ Pipeline failed. Check logs.'
         }
     }
 }
