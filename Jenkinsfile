@@ -9,7 +9,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('microservices-assignment2/order-service') {
+                dir('order-service') {
                     bat 'mvn clean package -DskipTests'
                 }
             }
@@ -17,7 +17,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('microservices-assignment2/order-service') {
+                dir('order-service') {
                     bat 'mvn test'
                 }
             }
@@ -25,7 +25,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                dir('microservices-assignment2/order-service') {
+                dir('order-service') {
                     bat 'docker build -t order-service .'
                 }
             }
