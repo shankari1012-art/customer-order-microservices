@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
-            steps {
-                git 'https://github.com/shankari1012-art/customer-order-microservices.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 dir('microservices-assignment2/order-service') {
