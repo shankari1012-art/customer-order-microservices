@@ -9,21 +9,22 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/shankari1012-art/customer-order-microservices.git'
+                git branch: 'main',
+                url: 'https://github.com/shankari1012-art/customer-order-microservices.git'
             }
         }
 
-        stage('Build All Services') {
+        stage('Build - Order Service') {
             steps {
-                dir('microservices-assignment2') {
-                    bat 'mvn clean install -DskipTests'
+                dir('microservices-assignment2/order-service') {
+                    bat 'mvn clean package -DskipTests'
                 }
             }
         }
 
-        stage('Test') {
+        stage('Test - Order Service') {
             steps {
-                dir('microservices-assignment2') {
+                dir('microservices-assignment2/order-service') {
                     bat 'mvn test'
                 }
             }
