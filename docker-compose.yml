@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+
+  discovery-server:
+    build: ./microservices-assignment2/discovery-server
+    ports:
+      - "8761:8761"
+
+  customer-service:
+    build: ./microservices-assignment2/customer-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - discovery-server
+
+  order-service:
+    build: ./microservices-assignment2/order-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - discovery-server
