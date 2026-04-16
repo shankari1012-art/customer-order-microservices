@@ -20,3 +20,20 @@ venv/
 # Misc
 *.zip
 *.pdf
+# Maven build
+target/
+
+# IntelliJ / IDE
+.idea/
+*.iml
+
+# OS files
+desktop.ini
+.DS_Store
+
+# Python virtual env (caused your git issue)
+.venv/
+venv/
+
+# Logs
+*.log
